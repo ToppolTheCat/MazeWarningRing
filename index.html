@@ -28,6 +28,7 @@
             position: absolute;
             border-radius: 50%;
             border: 2px solid red;
+            pointer-events: none; /* Allows clicks to pass through the circle */
         }
     </style>
 </head>
@@ -39,23 +40,24 @@
         let activeCircle = null;
 
         background.addEventListener('click', (event) => {
-            {
-                            if (activeCircle) {
-                            activeCircle.remove();
-                            activeCircle = null;
-                            }
-                const circle = document.createElement('div');
-                const radius = 305; // Radius of the circle in pixels
-
-                circle.style.width = `${radius * 2}px`;
-                circle.style.height = `${radius * 2}px`;
-                circle.style.left = `${event.clientX - radius}px`;
-                circle.style.top = `${event.clientY - radius}px`;
-                circle.className = 'circle';
-
-                document.body.appendChild(circle);
-                activeCircle = circle;
+            // Remove existing circle
+            if (activeCircle) {
+                activeCircle.remove();
+                activeCircle = null;
             }
+
+            // Create a new circle
+            const circle = document.createElement('div');
+            const radius = 305; // Radius of the circle in pixels
+
+            circle.style.width = `${radius * 2}px`;
+            circle.style.height = `${radius * 2}px`;
+            circle.style.left = `${event.clientX - radius}px`;
+            circle.style.top = `${event.clientY - radius}px`;
+            circle.className = 'circle';
+
+            document.body.appendChild(circle);
+            activeCircle = circle;
         });
     </script>
 </body>
