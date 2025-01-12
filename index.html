@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Draw on Click</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://static.wikia.nocookie.net/bookofaberoth/images/9/91/Maze.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+
+    <script>
+        const background = document.getElementById('background');
+
+        background.addEventListener('click', (event) => {
+            const circle = document.createElement('div');
+            const radius = 50; // Radius of the circle in pixels
+
+            circle.style.width = `${radius * 2}px`;
+            circle.style.height = `${radius * 2}px`;
+            circle.style.left = `${event.clientX - radius}px`;
+            circle.style.top = `${event.clientY - radius}px`;
+            circle.className = 'circle';
+
+            document.body.appendChild(circle);
+
+            // Remove the circle after 1 second
+            setTimeout(() => {
+                circle.remove();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
