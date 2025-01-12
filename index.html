@@ -6,15 +6,22 @@
     <title>Circle Draw on Click</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
         #background {
             position: absolute;
-            top: 0;
-            left: 0;
-            background: url('Maze.png');
-            background-size: contain;
-            image-rendering: pixelated;
+            top: 50%;
+            left: 50%;
+            width: 709px; /* Original image width */
+            height: 734px; /* Original image height */
+            transform: translate(-50%, -50%);
+            background: url('Maze.png') no-repeat center center;
+            background-size: 100%; /* Ensures no scaling distortion */
+            image-rendering: crisp-edges; /* Improve sharpness */
+            image-rendering: pixelated; /* For pixel art-style images */
         }
 
         .circle {
