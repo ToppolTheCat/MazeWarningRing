@@ -39,10 +39,11 @@
         let activeCircle = null;
 
         background.addEventListener('click', (event) => {
-            if (activeCircle) {
-                activeCircle.remove();
-                activeCircle = null;
-            } else {
+            {
+                            if (activeCircle) {
+                            activeCircle.remove();
+                            activeCircle = null;
+                            }
                 const circle = document.createElement('div');
                 const radius = 150; // Radius of the circle in pixels
 
