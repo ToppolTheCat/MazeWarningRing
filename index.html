@@ -37,6 +37,17 @@
             border: 2px solid red;
             pointer-events: none;
         }
+
+        h3 {
+            color: cyan; /* Set the text color to cyan */
+            position: fixed; /* Fix the position so it stays at the forefront */
+            top: 10px; /* Adjust vertical positioning */
+            left: 10px; /* Adjust horizontal positioning */
+            z-index: 1000; /* Ensure it appears above other elements */
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
+            padding: 10px; /* Optional: Add padding for better visibility */
+            border-radius: 5px; /* Optional: Rounded corners for aesthetic */
+        }
     </style>
 </head>
 <body>
