@@ -67,9 +67,22 @@
                 activeCircle = circle;
             }
         });
+        
+    background.addEventListener('keydown', function(event) {
+      if (event.key === ' ') {
+        if (activeCircle) {
+            activeCircle.remove();
+            activeCircle = null;
+        }
+        if (activeCircle2) {
+            activeCircle2.remove();
+            activeCircle2 = null;
+        }
+      }
+    });
 
-        background.addEventListener('contextmenu', (event) => {
-            {
+    background.addEventListener('mousedown', (event) => {
+      if (event.button === 1) {
                             if (activeCircle2) {
                             activeCircle2.remove();
                             activeCircle2 = null;
@@ -86,19 +99,7 @@
 
                 document.body.appendChild(circle);
                 activeCircle = circle;
-            }
-        });
-
-    background.addEventListener('mousedown', (event) => {
-      if (event.button === 1) {
-                            if (activeCircle) {
-                            activeCircle.remove();
-                            activeCircle = null;
-                            }
-                            if (activeCircle2) {
-                            activeCircle2.remove();
-                            activeCircle2 = null;
-                            }
+                            
           }
         });
     </script>
