@@ -40,6 +40,7 @@
     </style>
 </head>
 <body>
+    <h3>L.Click: Green circle.   M.Click: Red Circle.   Spacebar: Clear circles</h3>
     <div id="background"></div>
 
     <script>
@@ -60,7 +61,7 @@
                 circle.style.height = `${radius * 2}px`;
                 circle.style.left = `${event.clientX - radius}px`;
                 circle.style.top = `${event.clientY - radius}px`;
-                circle.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
+                circle.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
                 circle.className = 'circle';
 
                 document.body.appendChild(circle);
@@ -101,7 +102,7 @@
             circle2.style.height = `${radius * 2}px`;
             circle2.style.left = `${event.clientX - radius}px`;
             circle2.style.top = `${event.clientY - radius}px`;
-            circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Red with 90% transparency
+            circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.15)'; // Red with 80% transparency
             circle2.style.borderRadius = '50%'; // Make it a circle
             circle2.style.pointerEvents = 'none'; // Prevent it from blocking mouse events
             circle2.className = 'circle2';
