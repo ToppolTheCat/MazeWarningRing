@@ -27,14 +27,14 @@
         .circle {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid red;
+            border: 2px solid green;
             pointer-events: none;
         }
 
         .circle2 {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid green;
+            border: 2px solid red;
             pointer-events: none;
         }
     </style>
@@ -95,7 +95,7 @@
                 circle.style.left = `${event.clientX - radius}px`;
                 circle.style.top = `${event.clientY - radius}px`;
                 circle.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
-                circle.className = 'circle';
+                circle.className = 'circle2';
 
                 document.body.appendChild(circle);
                 activeCircle = circle;
