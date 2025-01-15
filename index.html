@@ -68,7 +68,7 @@
             }
         });
         
-    background.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function(event) {
       if (event.key === ' ') {
         if (activeCircle) {
             activeCircle.remove();
@@ -90,15 +90,15 @@
                 const circle2 = document.createElement('div');
                 const radius = 305; // Radius of the circle in pixels
 
-                circle.style.width = `${radius * 2}px`;
-                circle.style.height = `${radius * 2}px`;
-                circle.style.left = `${event.clientX - radius}px`;
-                circle.style.top = `${event.clientY - radius}px`;
-                circle.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
-                circle.className = 'circle2';
+                circle2.style.width = `${radius * 2}px`;
+                circle2.style.height = `${radius * 2}px`;
+                circle2.style.left = `${event.clientX - radius}px`;
+                circle2.style.top = `${event.clientY - radius}px`;
+                circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                circle2.className = 'circle2';
 
                 document.body.appendChild(circle);
-                activeCircle = circle;
+                activeCircle2 = circle2;
                             
           }
         });
