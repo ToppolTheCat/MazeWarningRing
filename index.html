@@ -30,6 +30,13 @@
             border: 2px solid red;
             pointer-events: none;
         }
+
+        .circle2 {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid green;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -38,6 +45,7 @@
     <script>
         const background = document.getElementById('background');
         let activeCircle = null;
+        let activeCircle2 = null;
 
         background.addEventListener('click', (event) => {
             {
@@ -52,11 +60,46 @@
                 circle.style.height = `${radius * 2}px`;
                 circle.style.left = `${event.clientX - radius}px`;
                 circle.style.top = `${event.clientY - radius}px`;
+                circle.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
                 circle.className = 'circle';
 
                 document.body.appendChild(circle);
                 activeCircle = circle;
             }
+        });
+
+        background.addEventListener('contextmenu', (event) => {
+            {
+                            if (activeCircle2) {
+                            activeCircle2.remove();
+                            activeCircle2 = null;
+                            }
+                const circle2 = document.createElement('div');
+                const radius = 305; // Radius of the circle in pixels
+
+                circle.style.width = `${radius * 2}px`;
+                circle.style.height = `${radius * 2}px`;
+                circle.style.left = `${event.clientX - radius}px`;
+                circle.style.top = `${event.clientY - radius}px`;
+                circle.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                circle.className = 'circle';
+
+                document.body.appendChild(circle);
+                activeCircle = circle;
+            }
+        });
+
+    background.addEventListener('mousedown', (event) => {
+      if (event.button === 1) {
+                            if (activeCircle) {
+                            activeCircle.remove();
+                            activeCircle = null;
+                            }
+                            if (activeCircle2) {
+                            activeCircle2.remove();
+                            activeCircle2 = null;
+                            }
+          }
         });
     </script>
 </body>
