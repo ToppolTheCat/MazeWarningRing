@@ -67,41 +67,50 @@
                 activeCircle = circle;
             }
         });
-        
+
     document.addEventListener('keydown', function(event) {
-      if (event.key === ' ') {
-        if (activeCircle) {
-            activeCircle.remove();
-            activeCircle = null;
+        if (event.key === ' ') {
+            event.preventDefault(); // Prevent the default scrolling behavior
+            if (activeCircle) {
+                activeCircle.remove();
+                activeCircle = null;
+            }
+            if (activeCircle2) {
+                activeCircle2.remove();
+                activeCircle2 = null;
+            }
         }
-        if (activeCircle2) {
-            activeCircle2.remove();
-            activeCircle2 = null;
-        }
-      }
     });
 
     background.addEventListener('mousedown', (event) => {
-      if (event.button === 1) {
-                            if (activeCircle2) {
-                            activeCircle2.remove();
-                            activeCircle2 = null;
-                            }
-                const circle2 = document.createElement('div');
-                const radius = 305; // Radius of the circle in pixels
+        if (event.button === 1) { // Middle mouse button
+            event.preventDefault(); // Prevent default middle-click behavior
+    
+            // Remove the existing circle if present
+            if (activeCircle2) {
+                activeCircle2.remove();
+                activeCircle2 = null;
+            }
+    
+            // Create a new circle
+            const circle2 = document.createElement('div');
+            const radius = 305; // Radius of the circle in pixels
+    
+            circle2.style.position = 'absolute';
+            circle2.style.width = `${radius * 2}px`;
+            circle2.style.height = `${radius * 2}px`;
+            circle2.style.left = `${event.clientX - radius}px`;
+            circle2.style.top = `${event.clientY - radius}px`;
+            circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Red with 90% transparency
+            circle2.style.borderRadius = '50%'; // Make it a circle
+            circle2.style.pointerEvents = 'none'; // Prevent it from blocking mouse events
+            circle2.className = 'circle2';
+    
+            document.body.appendChild(circle2); // Append the new circle
+            activeCircle2 = circle2; // Store the reference to the circle
+        }
+    });
 
-                circle2.style.width = `${radius * 2}px`;
-                circle2.style.height = `${radius * 2}px`;
-                circle2.style.left = `${event.clientX - radius}px`;
-                circle2.style.top = `${event.clientY - radius}px`;
-                circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
-                circle2.className = 'circle2';
-
-                document.body.appendChild(circle);
-                activeCircle2 = circle2;
-                            
-          }
-        });
     </script>
 </body>
 </html>
