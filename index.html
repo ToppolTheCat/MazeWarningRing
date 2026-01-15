@@ -9,18 +9,19 @@
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
         }
 
         #background {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: relative;
             width: 709px;
             /* Fixed dimensions to maintain pixel scale */
             height: 734px;
             /* Fixed dimensions to maintain pixel scale */
-            transform: translate(-50%, -50%);
+            margin: auto;
             background: url('Maze.png') no-repeat center center;
             background-size: 100% 100%;
             /* Display at exact pixel dimensions */
@@ -185,14 +186,19 @@
             const circle = document.createElement('div');
             const radius = 305; // Radius of the circle in pixels
 
+            // Get position relative to the background div
+            const rect = background.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
             circle.style.width = `${radius * 2}px`;
             circle.style.height = `${radius * 2}px`;
-            circle.style.left = `${event.clientX - radius}px`;
-            circle.style.top = `${event.clientY - radius}px`;
+            circle.style.left = `${x - radius}px`;
+            circle.style.top = `${y - radius}px`;
             circle.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
             circle.className = 'circle';
 
-            document.body.appendChild(circle);
+            background.appendChild(circle);
         });
 
         // Middle click to add a red circle
@@ -203,17 +209,22 @@
                 const circle2 = document.createElement('div');
                 const radius = 305; // Radius of the circle in pixels
 
+                // Get position relative to the background div
+                const rect = background.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
                 circle2.style.position = 'absolute';
                 circle2.style.width = `${radius * 2}px`;
                 circle2.style.height = `${radius * 2}px`;
-                circle2.style.left = `${event.clientX - radius}px`;
-                circle2.style.top = `${event.clientY - radius}px`;
+                circle2.style.left = `${x - radius}px`;
+                circle2.style.top = `${y - radius}px`;
                 circle2.style.backgroundColor = 'rgba(255, 0, 0, 0.15)'; // Red with 80% transparency
                 circle2.style.borderRadius = '50%'; // Make it a circle
                 circle2.style.pointerEvents = 'none'; // Prevent it from blocking mouse events
                 circle2.className = 'circle2';
 
-                document.body.appendChild(circle2); // Append the new circle
+                background.appendChild(circle2);
             }
         });
     </script>
