@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,18 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 709px; /* Original image width */
-            height: 734px; /* Original image height */
+            width: 709px;
+            /* Fixed dimensions to maintain pixel scale */
+            height: 734px;
+            /* Fixed dimensions to maintain pixel scale */
             transform: translate(-50%, -50%);
             background: url('Maze.png') no-repeat center center;
-            background-size: 100%; /* Ensures no scaling distortion */
-            image-rendering: crisp-edges; /* Improve sharpness */
-            image-rendering: pixelated; /* For pixel art-style images */
+            background-size: 100% 100%;
+            /* Display at exact pixel dimensions */
+            image-rendering: crisp-edges;
+            /* Improve sharpness */
+            image-rendering: pixelated;
+            /* For pixel art-style images */
         }
 
         .circle {
@@ -39,56 +45,164 @@
         }
 
         h3 {
-            color: cyan; /* Set the text color to cyan */
-            position: fixed; /* Fix the position so it stays at the forefront */
-            top: 0px; /* Adjust vertical positioning */
-            left: 50px; /* Adjust horizontal positioning */
-            z-index: 1000; /* Ensure it appears above other elements */
-            background-color: rgba(0, 0, 0, 0.1); /* Optional: Add a semi-transparent background */
-            padding: 0px; /* Optional: Add padding for better visibility */
-            border-radius: 5px; /* Optional: Rounded corners for aesthetic */
+            color: cyan;
+            /* Set the text color to cyan */
+            position: fixed;
+            /* Fix the position so it stays at the forefront */
+            top: 0px;
+            /* Adjust vertical positioning */
+            left: 50px;
+            /* Adjust horizontal positioning */
+            z-index: 1000;
+            /* Ensure it appears above other elements */
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Optional: Add a semi-transparent background */
+            padding: 5px 10px;
+            /* Optional: Add padding for better visibility */
+            border-radius: 5px;
+            /* Optional: Rounded corners for aesthetic */
+            margin: 10px;
+        }
+
+        #imageName {
+            color: yellow;
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 48px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px 15px;
+            cursor: pointer;
+            user-select: none;
+            z-index: 1000;
+            border-radius: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        #leftArrow {
+            left: 20px;
+        }
+
+        #rightArrow {
+            right: 20px;
         }
     </style>
 </head>
+
 <body>
-    <h3>L.Click: Green circle.   M.Click: Red Circle.   Spacebar: Clear circles</h3>
+    <h3>L.Click: Green circle M.Click: Red Circle Spacebar: Clear ←/→: Switch Image</h3>
+    <div id="imageName">Maze</div>
+    <div id="leftArrow" class="arrow">←</div>
+    <div id="rightArrow" class="arrow">→</div>
     <div id="background"></div>
 
     <script>
         const background = document.getElementById('background');
-    
+        const imageNameDisplay = document.getElementById('imageName');
+        const leftArrow = document.getElementById('leftArrow');
+        const rightArrow = document.getElementById('rightArrow');
+
+        // Image configuration - each with native pixel dimensions
+        const images = [
+            { name: 'Maze', file: 'Maze.png', width: 709, height: 734 },
+            { name: 'Orc Cave', file: 'OrcCave.png', width: 1581, height: 1336 }
+        ];
+        let currentImageIndex = 0;
+
+        // Function to switch images
+        function switchImage(index) {
+            currentImageIndex = index;
+            const img = images[index];
+
+            // Set container to image's native dimensions (1:1 pixel scale)
+            background.style.width = `${img.width}px`;
+            background.style.height = `${img.height}px`;
+            background.style.backgroundImage = `url('${img.file}')`;
+            imageNameDisplay.textContent = img.name;
+
+            // Clear circles when switching images
+            const allCircles = document.querySelectorAll('.circle, .circle2');
+            allCircles.forEach(circle => circle.remove());
+        }
+
+        // Initial image load
+        switchImage(currentImageIndex);
+
+        // Arrow button navigation
+        leftArrow.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            switchImage(currentImageIndex);
+        });
+
+        rightArrow.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            switchImage(currentImageIndex);
+        });
+
         // Spacebar deletes all circles
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === ' ') {
                 event.preventDefault(); // Prevent the default scrolling behavior
                 const allCircles = document.querySelectorAll('.circle, .circle2');
                 allCircles.forEach(circle => circle.remove());
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                switchImage(currentImageIndex);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                switchImage(currentImageIndex);
             }
         });
-    
+
         // Left click to add a green circle
         background.addEventListener('click', (event) => {
             const circle = document.createElement('div');
             const radius = 305; // Radius of the circle in pixels
-    
+
             circle.style.width = `${radius * 2}px`;
             circle.style.height = `${radius * 2}px`;
             circle.style.left = `${event.clientX - radius}px`;
             circle.style.top = `${event.clientY - radius}px`;
             circle.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
             circle.className = 'circle';
-    
+
             document.body.appendChild(circle);
         });
-    
+
         // Middle click to add a red circle
         background.addEventListener('mousedown', (event) => {
             if (event.button === 1) { // Middle mouse button
                 event.preventDefault(); // Prevent default middle-click behavior
-    
+
                 const circle2 = document.createElement('div');
                 const radius = 305; // Radius of the circle in pixels
-    
+
                 circle2.style.position = 'absolute';
                 circle2.style.width = `${radius * 2}px`;
                 circle2.style.height = `${radius * 2}px`;
@@ -98,11 +212,12 @@
                 circle2.style.borderRadius = '50%'; // Make it a circle
                 circle2.style.pointerEvents = 'none'; // Prevent it from blocking mouse events
                 circle2.className = 'circle2';
-    
+
                 document.body.appendChild(circle2); // Append the new circle
             }
         });
     </script>
 
 </body>
+
 </html>
