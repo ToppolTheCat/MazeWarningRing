@@ -23,6 +23,7 @@
             /* Fixed dimensions to maintain pixel scale */
             margin: auto;
             flex-shrink: 0;
+            overflow: hidden;
             background: url('Maze.png') no-repeat center center;
             background-size: 100% 100%;
             /* Display at exact pixel dimensions */
@@ -122,25 +123,43 @@
     <div id="rightArrow" class="arrow">→</div>
     <div id="background"></div>
 
+    <script src="config.js"></script>
     <script>
         const background = document.getElementById('background');
         const imageNameDisplay = document.getElementById('imageName');
         const leftArrow = document.getElementById('leftArrow');
         const rightArrow = document.getElementById('rightArrow');
 
-        // Image configuration - each with native pixel dimensions
-        const images = [
-            { name: 'Maze', file: 'Maze.png', width: 709, height: 734 },
-            { name: 'Orc Cave', file: 'OrcCave.png', width: 1581, height: 1336 }
-        ];
+        // Use configuration from config.js
+        const images = mapConfig;
         let currentImageIndex = 0;
+        let imagesLoaded = false;
+
+        // Preload all images and get their natural dimensions
+        function preloadImages() {
+            return Promise.all(images.map((mapData, index) => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        // Store natural dimensions with scale applied
+                        mapData.width = Math.round(img.naturalWidth * (mapData.scaleX || 1.0));
+                        mapData.height = Math.round(img.naturalHeight * (mapData.scaleY || 1.0));
+                        resolve();
+                    };
+                    img.onerror = reject;
+                    img.src = mapData.file;
+                });
+            }));
+        }
 
         // Function to switch images
         function switchImage(index) {
+            if (!imagesLoaded) return;
+
             currentImageIndex = index;
             const img = images[index];
 
-            // Set container to image's native dimensions (1:1 pixel scale)
+            // Set container to image's scaled dimensions
             background.style.width = `${img.width}px`;
             background.style.height = `${img.height}px`;
             background.style.backgroundImage = `url('${img.file}')`;
@@ -151,8 +170,13 @@
             allCircles.forEach(circle => circle.remove());
         }
 
-        // Initial image load
-        switchImage(currentImageIndex);
+        // Preload images then initialize
+        preloadImages().then(() => {
+            imagesLoaded = true;
+            switchImage(currentImageIndex);
+        }).catch(error => {
+            console.error('Error loading images:', error);
+        });
 
         // Arrow button navigation
         leftArrow.addEventListener('click', () => {
@@ -185,7 +209,7 @@
         // Left click to add a green circle
         background.addEventListener('click', (event) => {
             const circle = document.createElement('div');
-            const radius = 305; // Radius of the circle in pixels
+            const radius = images[currentImageIndex].radius; // Get radius from config
 
             // Get position relative to the background div
             const rect = background.getBoundingClientRect();
@@ -208,7 +232,7 @@
                 event.preventDefault(); // Prevent default middle-click behavior
 
                 const circle2 = document.createElement('div');
-                const radius = 305; // Radius of the circle in pixels
+                const radius = images[currentImageIndex].radius; // Get radius from config
 
                 // Get position relative to the background div
                 const rect = background.getBoundingClientRect();
