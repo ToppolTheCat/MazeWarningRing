@@ -11,7 +11,7 @@ const mapConfig = [
         scaleX: 1.0,    // Display at 100% of original width
         scaleY: 1.0,    // Display at 100% of original height
         radius: 305,    // Circle radius in pixels
-        polarCoordsScale: 1.0
+        polarCoordsScale: 1.015
     },
     {
         name: 'Orc Cave',
@@ -19,7 +19,7 @@ const mapConfig = [
         scaleX: 0.6,
         scaleY: 0.6,
         radius: 305 * 0.6,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 0.591
     },
     {
         name: 'Black Bat Cave',
@@ -27,15 +27,15 @@ const mapConfig = [
         scaleX: 1.59,
         scaleY: 1.59,
         radius: 305,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 1.02
     },
     {
-        name: 'Rogue Den',
+        name: 'Rogue Den (WR ONLY)',
         file: 'RogueDen.png',
         scaleX: 1.02,
         scaleY: 1.02,
         radius: 305,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 0.597
     },
     {
         name: 'The Forest',
@@ -43,7 +43,7 @@ const mapConfig = [
         scaleX: 1.25,
         scaleY: 1.25,
         radius: 305 * .47 * 1.25,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 0.597
     },
     {
         name: 'The Tomb (UNCALIBRATED)',
@@ -51,23 +51,23 @@ const mapConfig = [
         scaleX: 1.0,
         scaleY: 1.0,
         radius: 305 * .5,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 0.597
     },
     {
-        name: 'Grassy Field',
+        name: 'Grassy Field (PD ONLY)',
         file: 'GRASSY FIELD.png',
-        scaleX: 1.0,
-        scaleY: 1.0,
+        scaleX: 0.7,
+        scaleY: 0.7,
         radius: 305,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 1.4
     },
     {
-        name: 'Aberoth Desert',
+        name: 'Aberoth Desert (PD ONLY)',
         file: 'AberothDesert.png',
-        scaleX: 1.0,
-        scaleY: 1.0,
+        scaleX: 2.0,
+        scaleY: 2.0,
         radius: 305,
-        polarCoordsScale: 1.0
+        polarCoordsScale: 0.235 * 2
     }
 ];
 
