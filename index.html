@@ -47,6 +47,14 @@
             pointer-events: none;
         }
 
+        .polar-overlay {
+            position: absolute;
+            pointer-events: none;
+            image-rendering: crisp-edges;
+            image-rendering: pixelated;
+            opacity: 0.85;
+        }
+
         h3 {
             color: cyan;
             /* Set the text color to cyan */
@@ -117,7 +125,8 @@
 </head>
 
 <body>
-    <h3>L.Click: Green circle M.Click: Red Circle Spacebar: Clear ←/→: Switch Image</h3>
+    <h3>L.Click: Green circle &nbsp; M.Click: Red Circle &nbsp; Shift+Click: Polar Overlay &nbsp; Spacebar: Clear &nbsp;
+        ←/→: Switch Image</h3>
     <div id="imageName">Maze</div>
     <div id="leftArrow" class="arrow">←</div>
     <div id="rightArrow" class="arrow">→</div>
@@ -165,8 +174,8 @@
             background.style.backgroundImage = `url('${img.file}')`;
             imageNameDisplay.textContent = img.name;
 
-            // Clear circles when switching images
-            const allCircles = document.querySelectorAll('.circle, .circle2');
+            // Clear circles and overlays when switching images
+            const allCircles = document.querySelectorAll('.circle, .circle2, .polar-overlay');
             allCircles.forEach(circle => circle.remove());
         }
 
@@ -189,11 +198,11 @@
             switchImage(currentImageIndex);
         });
 
-        // Spacebar deletes all circles
+        // Spacebar deletes all circles and overlays
         document.addEventListener('keydown', function (event) {
             if (event.key === ' ') {
                 event.preventDefault(); // Prevent the default scrolling behavior
-                const allCircles = document.querySelectorAll('.circle, .circle2');
+                const allCircles = document.querySelectorAll('.circle, .circle2, .polar-overlay');
                 allCircles.forEach(circle => circle.remove());
             } else if (event.key === 'ArrowLeft') {
                 event.preventDefault();
@@ -206,24 +215,47 @@
             }
         });
 
-        // Left click to add a green circle
-        background.addEventListener('click', (event) => {
-            const circle = document.createElement('div');
-            const radius = images[currentImageIndex].radius; // Get radius from config
+        // Preload the polar coords overlay image once to get its natural dimensions
+        const polarImg = new Image();
+        polarImg.src = polarCoordsFile;
 
-            // Get position relative to the background div
+        // Left click: green circle  |  Shift+click: polar coords overlay
+        background.addEventListener('click', (event) => {
             const rect = background.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
 
-            circle.style.width = `${radius * 2}px`;
-            circle.style.height = `${radius * 2}px`;
-            circle.style.left = `${x - radius}px`;
-            circle.style.top = `${y - radius}px`;
-            circle.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
-            circle.className = 'circle';
+            if (event.shiftKey) {
+                // Remove any existing polar overlays first
+                background.querySelectorAll('.polar-overlay').forEach(el => el.remove());
 
-            background.appendChild(circle);
+                const mapData = images[currentImageIndex];
+                const scale = mapData.polarCoordsScale || 1.0;
+                const w = Math.round(polarImg.naturalWidth * scale);
+                const h = Math.round(polarImg.naturalHeight * scale);
+
+                const overlay = document.createElement('img');
+                overlay.src = polarCoordsFile;
+                overlay.className = 'polar-overlay';
+                overlay.style.width = `${w}px`;
+                overlay.style.height = `${h}px`;
+                overlay.style.left = `${x - w / 2}px`;
+                overlay.style.top = `${y - h / 2}px`;
+
+                background.appendChild(overlay);
+            } else {
+                const circle = document.createElement('div');
+                const radius = images[currentImageIndex].radius;
+
+                circle.style.width = `${radius * 2}px`;
+                circle.style.height = `${radius * 2}px`;
+                circle.style.left = `${x - radius}px`;
+                circle.style.top = `${y - radius}px`;
+                circle.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
+                circle.className = 'circle';
+
+                background.appendChild(circle);
+            }
         });
 
         // Middle click to add a red circle
