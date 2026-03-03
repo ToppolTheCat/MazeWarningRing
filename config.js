@@ -30,12 +30,12 @@ const mapConfig = [
         polarCoordsScale: 1.02
     },
     {
-        name: 'Rogue Den (WR ONLY)',
+        name: 'Rogue Den',
         file: 'RogueDen.png',
         scaleX: 1.02,
         scaleY: 1.02,
         radius: 305,
-        polarCoordsScale: 0.597 * 1.02
+        polarCoordsScale: 1.02
     },
     {
         name: 'The Forest',
