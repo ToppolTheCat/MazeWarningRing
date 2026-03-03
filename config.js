@@ -35,7 +35,7 @@ const mapConfig = [
         scaleX: 1.02,
         scaleY: 1.02,
         radius: 305,
-        polarCoordsScale: 0.597
+        polarCoordsScale: 0.597 * 1.02
     },
     {
         name: 'The Forest',
@@ -56,18 +56,18 @@ const mapConfig = [
     {
         name: 'Grassy Field (PD ONLY)',
         file: 'GRASSY FIELD.png',
-        scaleX: 0.7,
-        scaleY: 0.7,
+        scaleX: 0.5,
+        scaleY: 0.5,
         radius: 305,
-        polarCoordsScale: 1.4
+        polarCoordsScale: 1.4 * (0.5 / 0.7)
     },
     {
         name: 'Aberoth Desert (PD ONLY)',
         file: 'AberothDesert.png',
-        scaleX: 2.0,
-        scaleY: 2.0,
+        scaleX: 1.6,
+        scaleY: 1.6,
         radius: 305,
-        polarCoordsScale: 0.235 * 2
+        polarCoordsScale: 0.235 * 1.6
     }
 ];
 
