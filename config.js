@@ -46,12 +46,12 @@ const mapConfig = [
         polarCoordsScale: 0.597
     },
     {
-        name: 'The Tomb (UNCALIBRATED)',
+        name: 'The Tomb',
         file: 'TheTomb.png',
         scaleX: 1.0,
         scaleY: 1.0,
-        radius: 305 * .5,
-        polarCoordsScale: 0.597
+        radius: 305 * .85,
+        polarCoordsScale: .865
     },
     {
         name: 'Grassy Field',
